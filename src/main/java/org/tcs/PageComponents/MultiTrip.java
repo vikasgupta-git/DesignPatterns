@@ -1,5 +1,6 @@
 package org.tcs.PageComponents;
 
+import io.reactivex.rxjava3.functions.Consumer;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.tcs.AbstractComponents.AbstractComponent;
@@ -17,11 +18,9 @@ public class MultiTrip extends AbstractComponent implements SearchFlightAvail {
         super(driver, sectionElement);
     }
 
-    public void checkAvail(String origin, String destination) {
-        System.out.println("I am  inside multitrip");
-        findElement(multCity_rdo).click();
-        findElement(modalPopUp).click();
-        selectOriginCity(origin);
+    public void checkAvail(final String origin, String destination) {
+        makeStateReady(s->selectOriginCity(origin));
+       // selectOriginCity(origin);
         selectDestinationCity(destination);
         selectDestinationCity2("BLR");
 
@@ -43,6 +42,18 @@ public class MultiTrip extends AbstractComponent implements SearchFlightAvail {
     {
         findElement(destination_2).click();
         findElement(By.xpath("(//a[@value='"+destination2+"'])[3]")).click();
+    }
+
+    public void makeStateReady(Consumer<MultiTrip> consumer){
+        System.out.println("I am  inside multitrip");
+        findElement(multCity_rdo).click();
+        findElement(modalPopUp).click();
+        try {
+            consumer.accept(this);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        System.out.println("I am done");
     }
 
 }
