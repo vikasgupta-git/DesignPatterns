@@ -48,6 +48,7 @@ public class MultiTrip extends AbstractComponent implements SearchFlightAvail {
         System.out.println("I am  inside multitrip");
         findElement(multCity_rdo).click();
         findElement(modalPopUp).click();
+        waitForElementToDisappear(modalPopUp);
         try {
             consumer.accept(this);
         } catch (Throwable e) {
