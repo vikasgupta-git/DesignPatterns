@@ -8,21 +8,29 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.tcs.PageComponents.MultiTrip;
 import org.tcs.PageComponents.RoundTrip;
 import org.tcs.PageObjects.TravelHomePage;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.HashMap;
 
-public class DemoTest {
+public class DemoTest extends  BaseTest{
 
 
+    WebDriver driver;
+    TravelHomePage travelHomePage;
    // By sectionElement= By.id("flightSearchContainer");
+
+    @BeforeTest
+    public void setUp(){
+        driver=initializeDriver();
+        travelHomePage=new TravelHomePage(driver);
+    }
 
     @Test(dataProvider = "getData")
     public void flightTest(HashMap<String,String> reservationDetails){
-        System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir")+"\\Executables\\chromedriver.exe");
-        WebDriver driver=new ChromeDriver();
-        TravelHomePage travelHomePage=new TravelHomePage(driver);
+
         travelHomePage.goTo();
        // travelHomePage.getFooterNav().selectFlight();
         System.out.println(travelHomePage.getFooterNav().getFlightAttribute());
@@ -36,6 +44,12 @@ public class DemoTest {
         travelHomePage.checkAvail(reservationDetails);
         //one way , round trip, multi trip - checkAvailibility(origin,destination
     }
+
+    @AfterTest
+    public void tearDown(){
+        driver.quit();
+    }
+
     @DataProvider
     public Object[][] getData(){
         HashMap<String,String> reservationDetails=new HashMap<String,String>();
