@@ -16,6 +16,7 @@ public class DataReader {
     //Add Jackson core and Jackson databind api
         //convert json file to json string
         //add apache-commons-io to use FileUtils class
+        //
         ObjectMapper mapper=new ObjectMapper();
         String jsonContent=FileUtils.readFileToString(new File(JsonFilePath), StandardCharsets.UTF_8);
         //TypeReference is used to convert the jsonContent into the provided format.
