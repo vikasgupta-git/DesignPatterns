@@ -8,6 +8,8 @@ import org.tcs.PageComponents.RoundTrip;
 import org.tcs.PageObjects.TravelHomePage;
 import org.testng.annotations.Test;
 
+import java.util.HashMap;
+
 public class DemoTest {
 
    // By sectionElement= By.id("flightSearchContainer");
@@ -26,7 +28,11 @@ public class DemoTest {
 
       //  travelHomePage.setBookingStrategy(new MultiTrip(driver,sectionElement));
         travelHomePage.setBookingStrategy("multitrip");
-        travelHomePage.checkAvail("MAA","HYD");
+        HashMap<String,String> reservationDetails=new HashMap<String,String>();
+        reservationDetails.put("origin","MAA");
+        reservationDetails.put("destination","HYD");
+        reservationDetails.put("destination2","DEL");
+        travelHomePage.checkAvail(reservationDetails);
 
 
         //one way , round trip, multi trip - checkAvailibility(origin,destination

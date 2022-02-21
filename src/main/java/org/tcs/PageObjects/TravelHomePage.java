@@ -9,6 +9,8 @@ import org.tcs.PageComponents.MultiTrip;
 import org.tcs.PageComponents.NavigationBar;
 import org.tcs.PageComponents.RoundTrip;
 
+import java.util.HashMap;
+
 public class TravelHomePage {
 
     By footerNavSectionElement=By.id("buttons");
@@ -47,9 +49,9 @@ public class TravelHomePage {
 
 
     }
-    public void checkAvail(String origin,String destination){
+    public void checkAvail(HashMap<String,String> reservationDetails){
 
-        searchFlightAvail.checkAvail(origin,destination);
+        searchFlightAvail.checkAvail(reservationDetails);
     }
 }
 
