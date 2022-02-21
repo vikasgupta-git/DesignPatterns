@@ -1,9 +1,12 @@
 package org.tcs.PageComponents;
 
+import io.reactivex.rxjava3.functions.Consumer;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.tcs.AbstractComponents.AbstractComponent;
 import org.tcs.AbstractComponents.SearchFlightAvail;
+
+import java.util.HashMap;
 
 public class MultiTrip extends AbstractComponent implements SearchFlightAvail {
     private By from=By.id("ctl00_mainContent_ddl_originStation1_CTXT");
@@ -17,13 +20,11 @@ public class MultiTrip extends AbstractComponent implements SearchFlightAvail {
         super(driver, sectionElement);
     }
 
-    public void checkAvail(String origin, String destination) {
-        System.out.println("I am  inside multitrip");
-        findElement(multCity_rdo).click();
-        findElement(modalPopUp).click();
-        selectOriginCity(origin);
-        selectDestinationCity(destination);
-        selectDestinationCity2("BLR");
+    public void checkAvail(HashMap<String, String> reservationDetails) {
+        makeStateReady(s->selectOriginCity(reservationDetails.get("origin")));
+       // selectOriginCity(origin);
+        selectDestinationCity(reservationDetails.get("destination"));
+        selectDestinationCity2(reservationDetails.get("destination2"));
 
 
     }
@@ -44,5 +45,19 @@ public class MultiTrip extends AbstractComponent implements SearchFlightAvail {
         findElement(destination_2).click();
         findElement(By.xpath("(//a[@value='"+destination2+"'])[3]")).click();
     }
+
+    public void makeStateReady(Consumer<MultiTrip> consumer){
+        System.out.println("I am  inside multitrip");
+        findElement(multCity_rdo).click();
+        findElement(modalPopUp).click();
+        waitForElementToDisappear(modalPopUp);
+        try {
+            consumer.accept(this);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        System.out.println("I am done");
+    }
+
 
 }
