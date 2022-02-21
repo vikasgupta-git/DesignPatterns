@@ -5,6 +5,7 @@ import io.cucumber.java.it.Data;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.tcs.DataLoads.DataReader;
 import org.tcs.PageComponents.MultiTrip;
 import org.tcs.PageComponents.RoundTrip;
 import org.tcs.PageObjects.TravelHomePage;
@@ -13,7 +14,10 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class DemoTest extends  BaseTest{
 
@@ -51,8 +55,8 @@ public class DemoTest extends  BaseTest{
     }
 
     @DataProvider
-    public Object[][] getData(){
-        HashMap<String,String> reservationDetails=new HashMap<String,String>();
+    public Object[][] getData() throws IOException {
+        /*HashMap<String,String> reservationDetails=new HashMap<String,String>();
         reservationDetails.put("origin","MAA");
         reservationDetails.put("destination","HYD");
         reservationDetails.put("destination2","DEL");
@@ -60,9 +64,14 @@ public class DemoTest extends  BaseTest{
         reservationDetails1.put("origin","DEL");
         reservationDetails1.put("destination","HYD");
         reservationDetails1.put("destination2","MAA");
+        List<HashMap<String,String>> l=new ArrayList<HashMap<String,String>>();
+        l.add(reservationDetails);
+        l.add(reservationDetails1);*/
+        DataReader data=new DataReader();
+        List<HashMap<String,String>> l=data.getJsonData(System.getProperty("user.dir")+"//Dataset//reservationDetails.json");
         return new Object[][]
                 {
-                        {reservationDetails},{reservationDetails1}
+                        {l.get(0)},{l.get(1)}
         };
 
     };
