@@ -28,7 +28,7 @@ public class DemoTest extends  BaseTest{
 
     @BeforeTest
     public void setUp(){
-        System.out.println("inside setup method2");
+        System.out.println("inside setup method version 4");
         driver=initializeDriver();
         travelHomePage=new TravelHomePage(driver);
     }
